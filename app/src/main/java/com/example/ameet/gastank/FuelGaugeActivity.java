@@ -78,7 +78,12 @@ public class FuelGaugeActivity extends AppCompatActivity {
 
         updateUI();
 
-
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        updateUI();
     }
 
     public void usingCarButtonClick() {

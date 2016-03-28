@@ -63,6 +63,7 @@ public class LocationChangeListener implements LocationListener {
             averageMpgText.setText(car.getMpgString());
             previousLocation = location;
         }
+
     }
 
     @Override

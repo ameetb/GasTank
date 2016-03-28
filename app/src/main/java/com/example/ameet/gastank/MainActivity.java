@@ -45,15 +45,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                savedCarsCursor.moveToFirst();
-                while (savedCarsCursor.getPosition()!=position){
-                    savedCarsCursor.moveToNext();
+                CarDataHelper mCarDataHelperUpdated=new CarDataHelper(MainActivity.this);
+                Cursor savedCarsCursorUpdate=mCarDataHelperUpdated.getAllRecords();
+                savedCarsCursorUpdate.moveToFirst();
+                while (savedCarsCursorUpdate.getPosition()!=position){
+                    savedCarsCursorUpdate.moveToNext();
                 }
-                final String name=savedCarsCursor.getString(savedCarsCursor.getColumnIndex(CarDataHelper.NAME));
-                final double mpg=Double.parseDouble(savedCarsCursor.getString(savedCarsCursor.getColumnIndex(CarDataHelper.MPG)));
-                final double gasRemaining=Double.parseDouble(savedCarsCursor.getString(savedCarsCursor.getColumnIndex(CarDataHelper.GASREMAINING)));
-                final int tankSize=Integer.parseInt(savedCarsCursor.getString(savedCarsCursor.getColumnIndex(CarDataHelper.TANKSIZE)));
-                Log.e("gasremainingmain",String.valueOf(gasRemaining));
+                final String name=savedCarsCursorUpdate.getString(savedCarsCursorUpdate.getColumnIndex(CarDataHelper.NAME));
+                final double mpg=Double.parseDouble(savedCarsCursorUpdate.getString(savedCarsCursorUpdate.getColumnIndex(CarDataHelper.MPG)));
+                final double gasRemaining=Double.parseDouble(savedCarsCursorUpdate.getString(savedCarsCursorUpdate.getColumnIndex(CarDataHelper.GASREMAINING)));
+                final int tankSize=Integer.parseInt(savedCarsCursorUpdate.getString(savedCarsCursorUpdate.getColumnIndex(CarDataHelper.TANKSIZE)));
 
                 Intent intent= new Intent(MainActivity.this.getApplicationContext(), FuelGaugeActivity.class);
                 final Car car=new Car(mpg,name,tankSize,gasRemaining,position);
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putSerializable("car", car);
                 intent.putExtras(bundle);
                 MainActivity.this.startActivity(intent);
-
             }
         });
 
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
